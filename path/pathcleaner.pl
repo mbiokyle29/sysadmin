@@ -40,3 +40,4 @@ foreach my $executable (@executables)
 say "Symlink folder created at: $sym_dir";
 say "Edit .bashrc too:";
 say "export PATH=\"\$PATH:/sbin/:/usr/sbin/:$sym_dir\"";
+say "expot SYMDIR=\"$sym_dir\"";
