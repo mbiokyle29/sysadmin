@@ -10,6 +10,7 @@ Simple script to check disk useage and email me if full!
 import logging, argparse, os, subprocess
 import smtplib
 from email.mime.text import MIMEText
+from check_report import Check
     
 def main():
     # args
@@ -18,14 +19,16 @@ def main():
     )
 
     parser.add_argument("--email", default="mbio.kyle@gmail.com")
-    args = parser.parse_args()
+    parser.add_argument("--db", help="sqlite db file to record sends", default="./disk.db")
 
+    args = parser.parse_args()
+    check = Check(args.db)
     res = df()
 
     for dev in res:
         percent = int(res[dev][:-1])
 
-        if percent > 90:
+        if percent > 90 and check.should_report():
             report(dev, percent, args.email)
 
 def df():

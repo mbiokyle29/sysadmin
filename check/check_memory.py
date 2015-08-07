@@ -11,6 +11,7 @@ and let me know if its going crazy
 import logging, argparse, os, subprocess
 import smtplib
 from email.mime.text import MIMEText
+from check_report import Check
     
 def main():
     # args
@@ -19,10 +20,13 @@ def main():
     )
 
     parser.add_argument("--email", default="mbio.kyle@gmail.com")
+    parser.add_argument("--db", help="sqlite db file to record sends", default="./mem.db")
+
     args = parser.parse_args()
     free_gb = free()
+    check = Check(args.db)
 
-    if int(free_gb) <= 2:
+    if int(free_gb) <= 2 and check.should_report():
         report(free_gb, args.email)
 
 def free():
