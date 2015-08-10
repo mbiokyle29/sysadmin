@@ -24,7 +24,7 @@ def main():
     args = parser.parse_args()
     check = Check(args.db)
     res = df()
-
+    
     for dev in res:
         percent = int(res[dev][:-1])
 

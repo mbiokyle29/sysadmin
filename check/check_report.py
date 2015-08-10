@@ -18,11 +18,16 @@ class Check():
 		query = "SELECT max(sent) FROM log"
 		c = self.conn.cursor()
 		c.execute(query)
-		most_recent = c.fetchone()
+		most_recent = c.fetchone()[0]
 		
-		recent_epoch = time.mktime(time.strptime(most_recent[0], "%Y-%m-%d %H:%M:%S"))
-		now = time.mktime(time.localtime())
+		now = int(time.mktime(time.localtime()))
 
-		print now
-		print recent_epoch
+		# if the last time we sent was more than 2 hours ago
+		# then send again!
+		two_hours = 3600
 
+		if now - most_recent >= 3600:
+			return True
+		else:
+			return False
+		
