@@ -30,6 +30,7 @@ def main():
 
         if percent > 90 and check.should_report():
             report(dev, percent, args.email)
+            check.log_report()
 
 def df():
 

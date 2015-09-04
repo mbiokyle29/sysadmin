@@ -28,6 +28,7 @@ def main():
 
     if int(free_gb) <= 2 and check.should_report():
         report(free_gb, args.email)
+        check.log_report()
 
 def free():
 

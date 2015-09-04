@@ -20,14 +20,22 @@ class Check():
 		c.execute(query)
 		most_recent = c.fetchone()[0]
 		
+		# if there are no entries yet
+		if most_recent == None:
+			return True
+
 		now = int(time.mktime(time.localtime()))
 
 		# if the last time we sent was more than 2 hours ago
 		# then send again!
 		two_hours = 3600
 
-		if now - most_recent >= 3600:
+		if now - most_recent >= two_hours:
 			return True
 		else:
 			return False
-		
+
+	def log_report(self):
+		query = "INSERT INTO log values(CURRENT_TIMESTAMP)"
+		c = self.conn.cursor()
+		c.execute(query)
